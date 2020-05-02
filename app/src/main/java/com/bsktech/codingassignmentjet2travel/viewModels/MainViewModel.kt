@@ -1,15 +1,14 @@
 package com.bsktech.codingassignmentjet2travel.viewModels
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.bsktech.codingassignmentjet2travel.models.Articles
+import com.bsktech.codingassignmentjet2travel.repository.Repository
 
 class MainViewModel : ViewModel() {
-
-    private val page: MutableLiveData<Int> = MutableLiveData()
     private var limit = 10
-
+    var articles: LiveData<List<Articles>>? = null
     fun getArticles(pageNumber: Int) {
-        page.value == pageNumber
+        articles = Repository.getArticles(pageNumber, limit)
     }
-
 }

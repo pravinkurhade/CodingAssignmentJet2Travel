@@ -1,10 +1,12 @@
 package com.bsktech.codingassignmentjet2travel
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bsktech.codingassignmentjet2travel.viewModels.MainViewModel
 
@@ -22,6 +24,12 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.getArticles(1)
+
+        viewModel.articles!!.observe(this, Observer {
+            for (item in it) {
+                Log.d("Main",item.content)
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
