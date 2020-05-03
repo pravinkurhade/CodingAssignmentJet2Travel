@@ -8,10 +8,8 @@ import com.bsktech.codingassignmentjet2travel.MyApplication
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 
 object MyRetrofitBuilder {
 

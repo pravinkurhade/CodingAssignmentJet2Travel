@@ -14,10 +14,14 @@ object Repository {
                 super.onActive()
                 job.let { theJob ->
                     CoroutineScope(Dispatchers.IO + theJob).launch {
-                        val articles = MyRetrofitBuilder.apiService.getArticles(page, limit)
-                        withContext(Dispatchers.Main) {
-                            value = articles
-                            theJob.complete()
+                        try {
+                            val articles = MyRetrofitBuilder.apiService.getArticles(page, limit)
+                            withContext(Dispatchers.Main) {
+                                value = articles
+                                theJob.complete()
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
                         }
                     }
                 }
