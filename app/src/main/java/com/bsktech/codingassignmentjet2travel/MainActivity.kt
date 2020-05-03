@@ -41,14 +41,7 @@ class MainActivity : AppCompatActivity(), (Articles) -> Unit {
         showProgressBar()
         viewModel.getArticles(currentPage)
 
-        viewModel.articles!!.observe(this, Observer {
-            for (item in it) {
-                articles.add(item)
-                articlesAdapter.notifyDataSetChanged()
-                isLoading = false
-                hideProgressBar()
-            }
-        })
+        observeData()
 
         recycler_view_articles.apply {
             linearLayoutManager = LinearLayoutManager(this@MainActivity)
@@ -63,6 +56,17 @@ class MainActivity : AppCompatActivity(), (Articles) -> Unit {
             addOnScrollListener(recyclerViewOnScrollListener)
             adapter = articlesAdapter
         }
+    }
+
+    private fun observeData() {
+        viewModel.articles!!.observe(this, Observer {
+            hideProgressBar()
+            for (item in it) {
+                articles.add(item)
+                articlesAdapter.notifyDataSetChanged()
+                isLoading = false
+            }
+        })
     }
 
     private fun showProgressBar() {
@@ -85,18 +89,9 @@ class MainActivity : AppCompatActivity(), (Articles) -> Unit {
                     if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE) {
                         isLoading = true
                         currentPage += 1
-                        Log.d(TAG, "onScrolled: Load More $currentPage")
                         viewModel.getArticles(currentPage)
                         showProgressBar()
-                        viewModel.articles!!.observe(this@MainActivity, Observer {
-                            for (item in it) {
-                                articles.add(item)
-                                articlesAdapter.notifyDataSetChanged()
-                                isLoading = false
-                            }
-                            hideProgressBar()
-                            Log.d(TAG, "onScrolled: Load data ${articles.size}")
-                        })
+                        observeData()
                     }
                 }
             }
