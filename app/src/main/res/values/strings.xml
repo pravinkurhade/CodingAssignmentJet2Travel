@@ -12,4 +12,6 @@
     <string name="articles">Articles</string>
     <string name="likes">Likes</string>
     <string name="comments">Comments</string>
+    <string name="article_image">Article Image</string>
+    <string name="user_image">User Image</string>
 </resources>

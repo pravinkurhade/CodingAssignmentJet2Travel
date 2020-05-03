@@ -22,10 +22,10 @@ object MyRetrofitBuilder {
             .client(okHttpClient)
     }
 
-    val apiService: ApiService by lazy {
+    val apiService: ApiServices by lazy {
         retrofitBuilder
             .build()
-            .create(ApiService::class.java)
+            .create(ApiServices::class.java)
     }
 
     val cacheSize = (10.times(1024).times(1024)).toLong()

@@ -1,10 +1,10 @@
 package com.bsktech.codingassignmentjet2travel
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bsktech.codingassignmentjet2travel.adaptors.ArticlesAdapter
 import com.bsktech.codingassignmentjet2travel.models.Articles
+import com.bsktech.codingassignmentjet2travel.utils.Constants
 import com.bsktech.codingassignmentjet2travel.viewModels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -21,11 +22,10 @@ import java.util.*
 class MainActivity : AppCompatActivity(), (Articles) -> Unit {
 
     lateinit var viewModel: MainViewModel
-    private val TAG = "MainActivity"
 
     private var articles = LinkedList<Articles>()
     private lateinit var articlesAdapter: ArticlesAdapter
-    var PAGE_SIZE = 10
+    var pageSize = Constants.LIMIT
     var currentPage = 1
     var isLoading = false
 
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity(), (Articles) -> Unit {
                 val firstVisibleItemPosition: Int =
                     linearLayoutManager.findFirstVisibleItemPosition()
                 if (!isLoading) {
-                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= PAGE_SIZE) {
+                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= pageSize) {
                         isLoading = true
                         currentPage += 1
                         viewModel.getArticles(currentPage)
@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity(), (Articles) -> Unit {
         }
     }
 
-    override fun invoke(p1: Articles) {
-        TODO("Not yet implemented")
+    override fun invoke(articles: Articles) {
+        Toast.makeText(this, articles.id, Toast.LENGTH_SHORT).show()
     }
 }

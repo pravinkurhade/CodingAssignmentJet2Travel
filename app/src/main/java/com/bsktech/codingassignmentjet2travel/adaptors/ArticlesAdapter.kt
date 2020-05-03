@@ -33,7 +33,7 @@ internal class ArticlesAdapter(
         private val articleImage: ImageView = view.findViewById(R.id.imageView_article)
         private val userImage: ImageView = view.findViewById(R.id.imageView_user)
 
-        fun bindBarcodeField(
+        fun bindArticleField(
             article: Articles,
             clickListener: (Articles) -> Unit
         ) {
@@ -68,6 +68,10 @@ internal class ArticlesAdapter(
                 articleImage.visibility = View.GONE
             }
 
+            itemView.setOnClickListener {
+                clickListener.invoke(article)
+            }
+
         }
 
         companion object {
@@ -83,7 +87,7 @@ internal class ArticlesAdapter(
         ArticlesFieldViewHolder.create(parent)
 
     override fun onBindViewHolder(holder: ArticlesFieldViewHolder, position: Int) =
-        holder.bindBarcodeField(articles[position], clickListener)
+        holder.bindArticleField(articles[position], clickListener)
 
     override fun getItemCount(): Int = articles.size
 }
